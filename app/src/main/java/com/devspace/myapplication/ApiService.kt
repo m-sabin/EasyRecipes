@@ -1,9 +1,13 @@
-package com.devspace.myapplication
+    package com.devspace.myapplication
 
-import retrofit2.http.GET
+    import retrofit2.http.GET
+    import retrofit2.http.Query
 
-interface ApiService {
+    interface ApiService {
 
-    @GET("recipes/random?number=1&include-tags=vegetarian,dessert&exclude-tags=quinoa")
-    suspend fun getRandomRecipes(): RecipeResponse
-}
+        @GET("recipes/random")
+        suspend fun getRandomRecipes(
+            @Query("number") number: Int = 20
+        ): RecipeResponse
+
+    }

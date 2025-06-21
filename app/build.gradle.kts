@@ -29,7 +29,7 @@ android {
         buildConfigField(
             type = "String",
             name = "API_KEY",
-            value = apiKey
+            value = "\"${properties["API_KEY"]}\""
         )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
