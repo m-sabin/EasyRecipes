@@ -22,10 +22,10 @@ fun RecipeApp() {
         composable(
             route = "RecipeSummary/{recipeId}",
             arguments = listOf(navArgument("recipeId") {
-                type = NavType.StringType
+                type = NavType.IntType
             })
         ) { backstackEntry ->
-            val id = requireNotNull(backstackEntry.arguments?.getString("recipeId"))
+            val id = requireNotNull(backstackEntry.arguments?.getInt("recipeId"))
             RecipeSummaryScreen(id, navController )
 
         }

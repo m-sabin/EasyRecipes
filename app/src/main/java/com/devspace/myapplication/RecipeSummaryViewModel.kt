@@ -17,7 +17,7 @@ class RecipeSummaryViewModel(
     var loading by mutableStateOf(false)
         private set
 
-     fun getRecipeSummary(id: String) {
+     fun getRecipeSummary(id: Int) {
         viewModelScope.launch {
             loading = true
             try {
@@ -30,5 +30,7 @@ class RecipeSummaryViewModel(
             }
         }
     }
+
+
 }
 

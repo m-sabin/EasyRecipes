@@ -41,8 +41,9 @@ fun RecipeListScreen(
     } else {
        RecipeDetailContent(
            recipes = recipes,
-           onClick = {
-               navController.navigate("RecipeSummary/{recipeId}")
+           onClick = { recipe ->
+               navController.navigate("RecipeSummary/${recipe.id}")
+
            }
        )
     }

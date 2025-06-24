@@ -5,7 +5,7 @@ class RecipeSummaryRepository(
         .retrofitInstance
         .create(ApiService::class.java)
 ) {
-    suspend fun fetchRecipeSummary(id: String): RecipeDto {
+    suspend fun fetchRecipeSummary(id: Int): RecipeDto {
         return apiService.getRecipeInformation(id)
     }
 }

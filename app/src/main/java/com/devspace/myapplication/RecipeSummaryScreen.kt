@@ -1,5 +1,6 @@
 package com.devspace.myapplication
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -29,12 +31,12 @@ import com.devspace.myapplication.ui.theme.EasyRecipesTheme
 
 @Composable
 fun RecipeSummaryScreen(
-    id: String,
+    id: Int,
     navController: NavHostController,
     viewModel: RecipeSummaryViewModel = viewModel()
 ) {
     val recipe = viewModel.recipeSummary
-    val laoding = viewModel.loading
+    val loading = viewModel.loading
 
     LaunchedEffect(id) {
         viewModel.getRecipeSummary(id)
@@ -52,17 +54,28 @@ fun RecipeSummaryScreen(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Back Button"
                 )
+            }
 
-                recipe.let {
-                    Text(
-                        modifier = Modifier.padding(start = 4.dp),
-                        text = ""
-                    )
+            recipe.let {
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = recipe?.title ?: "loading"
+                )
+            }
+
+            when {
+                loading -> {
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
                 }
-                when {
-                    laoding -> Text("🔄 Carregando receita...")
-                    recipe != null -> RecipeSummaryContent(recipe)
-                    else -> Text("❌ Receita não encontrada")
+
+                recipe != null -> {
+                    RecipeSummaryContent(recipe)
+                }
+
+                else -> {
+                    Text("❌ Receita não encontrada")
                 }
             }
         }
