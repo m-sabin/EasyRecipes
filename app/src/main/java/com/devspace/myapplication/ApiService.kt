@@ -1,6 +1,7 @@
     package com.devspace.myapplication
 
     import retrofit2.http.GET
+    import retrofit2.http.Path
     import retrofit2.http.Query
 
     interface ApiService {
@@ -9,5 +10,8 @@
         suspend fun getRandomRecipes(
             @Query("number") number: Int = 20
         ): RecipeResponse
+
+        @GET("recipes/{id}/information")
+        suspend fun getRecipeInformation(@Path("id") id : String) : RecipeDto
 
     }
