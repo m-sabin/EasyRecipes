@@ -1,11 +1,14 @@
 package com.devspace.myapplication
 
+import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -22,8 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -42,7 +48,12 @@ fun RecipeSummaryScreen(
         viewModel.getRecipeSummary(id)
     }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -59,33 +70,46 @@ fun RecipeSummaryScreen(
             recipe.let {
                 Text(
                     modifier = Modifier.padding(start = 4.dp),
+                    fontWeight = FontWeight.SemiBold,
                     text = recipe?.title ?: "loading"
                 )
             }
-
-            when {
-                loading -> {
-                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
-                }
-
-                recipe != null -> {
-                    RecipeSummaryContent(recipe)
-                }
-
-                else -> {
-                    Text("❌ Receita não encontrada")
+        }
+        Spacer(modifier = Modifier.size(8.dp))
+        when {
+            loading -> {
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
                 }
             }
+
+            recipe != null -> {
+                RecipeSummaryContent(recipe)
+            }
+
+            else -> {
+                Text("❌ Receita não encontrada")
+            }
         }
+
     }
+}
+@Composable
+fun HtmlTextViewByInformation(htmlText: String) {
+    AndroidView(factory = { context ->
+        TextView(context).apply {
+            text = HtmlCompat.fromHtml(htmlText, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            textSize = 14f
+        }
+    })
 }
 
 @Composable
 fun RecipeSummaryContent(recipe: RecipeDto) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
         AsyncImage(
             modifier = Modifier
@@ -95,7 +119,7 @@ fun RecipeSummaryContent(recipe: RecipeDto) {
             contentDescription = "${recipe.title} image",
             contentScale = ContentScale.Crop,
         )
-
-        HtmlTextViewBySummary(recipe.summary)
+        Spacer(modifier = Modifier.size(8.dp))
+        HtmlTextViewByInformation(recipe.summary)
     }
 }
