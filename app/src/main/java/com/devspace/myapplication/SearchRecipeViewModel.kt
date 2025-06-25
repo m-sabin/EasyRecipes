@@ -7,29 +7,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class RecipeSummaryViewModel(
-    private val repository: RecipeSummaryRepository = RecipeSummaryRepository()
+class SearchRecipeViewModel(
+    private val repository: SearchRecipeRepository = SearchRecipeRepository()
 ) : ViewModel() {
-    var recipeSummary by mutableStateOf<RecipeDto?>(null)
+
+    var searchRecipes by mutableStateOf<List<SearchRecipeDto>>(emptyList())
         private set
 
     var loading by mutableStateOf(false)
         private set
 
-     fun getRecipeSummary(id: Int) {
+
+    fun getSearchRecipes(query: String) {
         viewModelScope.launch {
             loading = true
             try {
-                val recipe = repository.fetchRecipeSummary(id)
-                recipeSummary = recipe
+                val recipes = repository.fetchSearchRecipes(query)
+                searchRecipes = recipes
+
             } catch (e: Exception) {
-                println("❌ Erro ao buscar receitas: ${e.message}")
+                println("Erro ao buscar receitas: ${e.message}")
             } finally {
                 loading = false
             }
+
         }
     }
 
-
 }
-

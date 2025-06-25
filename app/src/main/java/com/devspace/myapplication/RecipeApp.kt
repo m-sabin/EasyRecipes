@@ -29,5 +29,15 @@ fun RecipeApp() {
             RecipeSummaryScreen(id, navController )
 
         }
+
+        composable(
+            route = "SearchRecipe/{query}",
+            arguments = listOf(navArgument("query"){
+                type = NavType.StringType
+            })
+        ) { backstackEntry ->
+            val query = requireNotNull(backstackEntry.arguments?.getString("query"))
+            SearchRecipeScreen(query, navController)
+        }
     }
 }

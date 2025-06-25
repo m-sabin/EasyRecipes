@@ -14,6 +14,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -41,9 +45,11 @@ fun RecipeListScreen(
     } else {
        RecipeDetailContent(
            recipes = recipes,
+           onSearchClicked = { query ->
+               navController.navigate("SearchRecipe/$query")
+           },
            onClick = { recipe ->
                navController.navigate("RecipeSummary/${recipe.id}")
-
            }
        )
     }
@@ -63,25 +69,60 @@ fun HtmlTextViewBySummary(htmlText: String) {
 @Composable
 private fun RecipeDetailContent(
     recipes: List<RecipeDto>,
+    onSearchClicked: (String) -> Unit,
     onClick: (RecipeDto) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
+        var query by remember { mutableStateOf("") }
+        SearchSession(
+            label = "Find best recipes \nfor cooking",
+            query = query,
+            onValueChange = { newValue ->
+                query = newValue
+            },
+            onSearchClicked = onSearchClicked
+        )
+
         RecipeSession(
             label = "Recipes",
             recipes = recipes,
-            oncClick = onClick
+            onClick = onClick
         )
     }
 
 }
 
 @Composable
+private fun SearchSession(
+    label: String,
+    query: String,
+    onValueChange: (String) -> Unit,
+    onSearchClicked: (String) -> Unit
+){
+    Text(
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        text = label
+    )
+
+    ERSearchBar(
+        query = query,
+        placeHolder = "Search recipes",
+        onValueChange = onValueChange,
+        onSearchClicked = {
+            onSearchClicked.invoke(query)
+        }
+    )
+}
+
+@Composable
 private fun RecipeSession(
     label: String,
     recipes: List<RecipeDto>,
-    oncClick: (RecipeDto) -> Unit
+    onClick: (RecipeDto) -> Unit
 ) {
     Text(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
@@ -91,7 +132,7 @@ private fun RecipeSession(
     )
     RecipeList(
         recipes = recipes,
-        onClick = oncClick
+        onClick = onClick
     )
 }
 
