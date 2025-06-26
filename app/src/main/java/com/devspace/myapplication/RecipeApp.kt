@@ -36,8 +36,8 @@ fun RecipeApp() {
                 type = NavType.StringType
             })
         ) { backstackEntry ->
-            val query = requireNotNull(backstackEntry.arguments?.getString("query"))
-            SearchRecipeScreen(query, navController)
+            val id = requireNotNull(backstackEntry.arguments?.getString("query"))
+            SearchRecipeScreen(id, navController)
         }
     }
 }

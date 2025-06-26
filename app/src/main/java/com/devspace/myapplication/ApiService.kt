@@ -17,7 +17,7 @@ interface ApiService {
         @Query("includeNutrition") includeNutrition: Boolean = false
     ): RecipeDto
 
-    @GET("complexSearch")
+    @GET("recipes/complexSearch")
     suspend fun getSearchRecipes(@Query("query") query: String) : SearchRecipeResponse
 
 }

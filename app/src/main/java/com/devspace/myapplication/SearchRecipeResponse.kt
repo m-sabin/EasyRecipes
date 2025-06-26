@@ -7,8 +7,5 @@ data class SearchRecipeDto(
 )
 
 data class SearchRecipeResponse(
-    val results: List<SearchRecipeDto>,
-    val offset: Int,
-    val number: Int,
-    val totalResults: Int
+    val results: List<SearchRecipeDto>
 )

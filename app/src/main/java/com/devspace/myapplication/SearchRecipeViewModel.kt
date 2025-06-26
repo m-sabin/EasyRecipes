@@ -26,7 +26,7 @@ class SearchRecipeViewModel(
                 searchRecipes = recipes
 
             } catch (e: Exception) {
-                println("Erro ao buscar receitas: ${e.message}")
+                println("error searching for recipe: ${e.message}")
             } finally {
                 loading = false
             }

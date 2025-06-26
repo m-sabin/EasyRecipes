@@ -23,7 +23,7 @@ class RecipeSummaryViewModel(
                 val recipe = repository.fetchRecipeSummary(id)
                 recipeSummary = recipe
             } catch (e: Exception) {
-                println("❌ Erro ao buscar receitas: ${e.message}")
+                println("Error searching for recipe: ${e.message}")
             } finally {
                 loading = false
             }

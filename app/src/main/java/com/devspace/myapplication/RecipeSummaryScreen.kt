@@ -61,12 +61,12 @@ fun RecipeSummaryScreen(
                 )
             }
 
-            recipe.let {
+            recipe?.let {
                 Text(
                     modifier = Modifier.padding(start = 4.dp),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    text = recipe?.title ?: "loading"
+                    text = recipe.title
                 )
             }
         }

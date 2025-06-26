@@ -4,13 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,12 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import retrofit2.http.Query
 
 @Composable
 fun SearchRecipeScreen(
@@ -40,7 +41,7 @@ fun SearchRecipeScreen(
     val loading = viewModel.loading
 
     LaunchedEffect(query) {
-        viewModel.getSearchRecipes(query = String())
+        viewModel.getSearchRecipes(query = query)
     }
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -67,9 +68,9 @@ fun SearchRecipeScreen(
             }
         } else {
                 SearchRecipeContent(
-                    recipesList = recipes,
-                    onClick = {itemClicked ->
-                        navController.navigate("SearchRecipe/${itemClicked.id}")
+                    recipes = recipes,
+                    onClick = {recipeClicked ->
+                        navController.navigate("RecipeSummary/${recipeClicked.id}")
                     })
             }
 
@@ -80,10 +81,10 @@ fun SearchRecipeScreen(
 
 @Composable
 private fun SearchRecipeContent(
-    recipesList: List<SearchRecipeDto>,
+    recipes: List<SearchRecipeDto>,
     onClick: (SearchRecipeDto) -> Unit
 ) {
-    SearchRecipeList(recipesList, onClick)
+    SearchRecipeList(recipes, onClick)
 }
 
 @Composable
@@ -120,8 +121,16 @@ private fun SearchRecipeItem(
                 .height(150.dp),
             contentScale = ContentScale.Crop,
             model = searchRecipes.image, contentDescription = "${searchRecipes.title} image",
-
             )
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Text(
+            modifier = Modifier.padding(8.dp),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold,
+            text = searchRecipes.title
+
+        )
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,21 +40,30 @@ fun RecipeListScreen(
     val recipes = viewModel.randomRecipes
     val isLoading = viewModel.loading
 
-    if (isLoading) {
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
+    Surface(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        if (isLoading) {
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else {
+            RecipeDetailContent(
+                recipes = recipes,
+                onSearchClicked = { query ->
+                    val tempCleanQuery = query.trim()
+                    if (tempCleanQuery.isNotEmpty()) {
+                        navController.navigate(route = "SearchRecipe/$tempCleanQuery")
+                    }
+                },
+                onClick = { recipe ->
+                    navController.navigate("RecipeSummary/${recipe.id}")
+                }
+            )
         }
-    } else {
-       RecipeDetailContent(
-           recipes = recipes,
-           onSearchClicked = { query ->
-               navController.navigate("SearchRecipe/$query")
-           },
-           onClick = { recipe ->
-               navController.navigate("RecipeSummary/${recipe.id}")
-           }
-       )
     }
+
+
 }
 
 @Composable
@@ -100,7 +111,7 @@ private fun SearchSession(
     query: String,
     onValueChange: (String) -> Unit,
     onSearchClicked: (String) -> Unit
-){
+) {
     Text(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
         fontWeight = FontWeight.Bold,

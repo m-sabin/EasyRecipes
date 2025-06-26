@@ -1,6 +1,5 @@
 package com.devspace.myapplication
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -29,11 +28,10 @@ class RandomRecipeViewModel(
             try {
                 val recipes = repository.fetchRandomRecipes()
                 randomRecipes = recipes
-                println("🍽️ Receitas carregadas: ${randomRecipes.size}")
+                println(" Loaded recipes: ${randomRecipes.size}")
 
             } catch (e: Exception) {
-//                Log.e("RecipeViewModel", "Error fetching random recipes", e)
-                println("❌ Erro ao buscar receitas: ${e.message}")
+                println("Error searching for recipe: ${e.message}")
             } finally {
                 loading = false
             }
