@@ -6,6 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.devspace.myapplication.features.radomrecipe.RecipeListScreen
+import com.devspace.myapplication.features.searchrecipe.SearchRecipeScreen
+import com.devspace.myapplication.features.summaryrecipe.RecipeSummaryScreen
+import com.devspace.myapplication.ui.components.OnboardingScreen
 
 @Composable
 fun RecipeApp() {
@@ -26,7 +30,7 @@ fun RecipeApp() {
             })
         ) { backstackEntry ->
             val id = requireNotNull(backstackEntry.arguments?.getInt("recipeId"))
-            RecipeSummaryScreen(id, navController )
+            RecipeSummaryScreen(id, navController)
 
         }
 

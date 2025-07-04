@@ -1,4 +1,4 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.features.searchrecipe
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.features.searchrecipe
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,34 +7,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class RandomRecipeViewModel(
-    private val repository: RandomRecipeRepository = RandomRecipeRepository()
+class SearchRecipeViewModel(
+    private val repository: SearchRecipeRepository = SearchRecipeRepository()
 ) : ViewModel() {
 
-    var randomRecipes by mutableStateOf<List<RecipeDto>>(emptyList())
+    var searchRecipes by mutableStateOf<List<SearchRecipeDto>>(emptyList())
         private set
 
     var loading by mutableStateOf(false)
         private set
 
-    init {
-        getRandomRecipes()
-    }
 
-    private fun getRandomRecipes() {
+    fun getSearchRecipes(query: String) {
         viewModelScope.launch {
-
             loading = true
             try {
-                val recipes = repository.fetchRandomRecipes()
-                randomRecipes = recipes
-                println(" Loaded recipes: ${randomRecipes.size}")
+                val recipes = repository.fetchSearchRecipes(query)
+                searchRecipes = recipes
 
             } catch (e: Exception) {
-                println("Error searching for recipe: ${e.message}")
+                println("error searching for recipe: ${e.message}")
             } finally {
                 loading = false
             }
+
         }
     }
+
 }

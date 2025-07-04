@@ -1,37 +1,36 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.features.summaryrecipe
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devspace.myapplication.common.dto.RecipeDto
 import kotlinx.coroutines.launch
 
-class SearchRecipeViewModel(
-    private val repository: SearchRecipeRepository = SearchRecipeRepository()
+class RecipeSummaryViewModel(
+    private val repository: RecipeSummaryRepository = RecipeSummaryRepository()
 ) : ViewModel() {
-
-    var searchRecipes by mutableStateOf<List<SearchRecipeDto>>(emptyList())
+    var recipeSummary by mutableStateOf<RecipeDto?>(null)
         private set
 
     var loading by mutableStateOf(false)
         private set
 
-
-    fun getSearchRecipes(query: String) {
+     fun getRecipeSummary(id: Int) {
         viewModelScope.launch {
             loading = true
             try {
-                val recipes = repository.fetchSearchRecipes(query)
-                searchRecipes = recipes
-
+                val recipe = repository.fetchRecipeSummary(id)
+                recipeSummary = recipe
             } catch (e: Exception) {
-                println("error searching for recipe: ${e.message}")
+                println("Error searching for recipe: ${e.message}")
             } finally {
                 loading = false
             }
-
         }
     }
 
+
 }
+

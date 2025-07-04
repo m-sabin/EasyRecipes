@@ -1,4 +1,7 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.features.searchrecipe
+
+import com.devspace.myapplication.common.remote.ApiService
+import com.devspace.myapplication.common.remote.RetrofitClient
 
 class SearchRecipeRepository(
     private val apiService: ApiService = RetrofitClient

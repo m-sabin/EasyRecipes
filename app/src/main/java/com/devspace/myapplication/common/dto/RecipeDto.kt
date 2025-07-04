@@ -1,4 +1,4 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.common.dto
 
 data class RecipeDto(
     val id: Int,

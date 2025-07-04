@@ -1,4 +1,4 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

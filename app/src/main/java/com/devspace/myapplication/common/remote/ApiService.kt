@@ -1,5 +1,8 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.common.remote
 
+import com.devspace.myapplication.common.dto.RecipeDto
+import com.devspace.myapplication.common.dto.RecipeResponse
+import com.devspace.myapplication.features.searchrecipe.SearchRecipeResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

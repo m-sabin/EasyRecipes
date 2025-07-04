@@ -1,4 +1,4 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.features.radomrecipe
 
 import android.widget.TextView
 import androidx.compose.foundation.clickable
@@ -31,6 +31,8 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.devspace.myapplication.ui.components.ERSearchBar
+import com.devspace.myapplication.common.dto.RecipeDto
 
 @Composable
 fun RecipeListScreen(

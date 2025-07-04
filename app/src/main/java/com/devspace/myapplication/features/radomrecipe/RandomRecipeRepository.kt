@@ -1,4 +1,8 @@
-package com.devspace.myapplication
+package com.devspace.myapplication.features.radomrecipe
+
+import com.devspace.myapplication.common.remote.ApiService
+import com.devspace.myapplication.common.dto.RecipeDto
+import com.devspace.myapplication.common.remote.RetrofitClient
 
 class RandomRecipeRepository(
     private val apiService: ApiService = RetrofitClient
